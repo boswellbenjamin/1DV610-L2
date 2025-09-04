@@ -13,9 +13,6 @@ export class Person {
   }
   
   getName(): string {
-    const firstNameKey = getRandomKey(person.firstNames);
-    const firstName = person.firstNames[firstNameKey];
-
     return this.firstName;
   }
   
@@ -25,13 +22,10 @@ export class Person {
 
    static random(): Person {
     
-    const firstNameKey = getRandomKey(person.firstNames);
-    const surNameKey = getRandomKey(person.surNames);
-    const ageKey = getRandomKey(person.ages);
-    const ageNumber = person.ages[ageKey];
-    const firstName = person.firstNames[firstNameKey];
-    const surName = person.surNames[surNameKey];
+    const age = person.ages[getRandomKey(person.ages)];
+    const firstName = person.firstNames[getRandomKey(person.firstNames)];
+    const surName = person.surNames[getRandomKey(person.surNames)];
 
-    return new Person(firstName, surName, ageNumber);
+    return new Person(firstName, surName, age);
   }
 }
