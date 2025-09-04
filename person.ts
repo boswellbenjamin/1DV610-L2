@@ -17,6 +17,10 @@ export class Person {
   getName(): string {
     return this.firstName;
   }
+
+  getSurname(): string {
+    return this.lastName;
+  }
   
   getAge(): number {
     return this.age;
