@@ -6,12 +6,14 @@ export class Person {
   lastName: string;
   age: number;
   gender: string;
+  profession: string;
 
-  constructor(firstName: string, lastName: string, age: number, gender: string) {
+  constructor(firstName: string, lastName: string, age: number, gender: string, profession: string) {
     this.firstName = firstName;
     this.lastName = lastName;
     this.age = age;
     this.gender = gender;
+    this.profession = profession;
   }
   
   getName(): string {
@@ -31,21 +33,31 @@ export class Person {
     return this.gender;
   }
 
+  getProfession(): string {
+    return this.profession;
+  }
+
    static random(): Person {
     
     let gender: string;
+  
     const age = person.ages[getRandomKey(person.ages)];
     const firstNameKey = getRandomKey(person.firstNames);
     const firstNameData = person.firstNames[firstNameKey];
     const firstName = firstNameData.name;
     const surName = person.surNames[getRandomKey(person.surNames)];
+    let profession = person.professions[getRandomKey(person.professions)];
     
     if (firstNameData.gender === "Female") {
-      gender = "female";
+      gender = "Female";
     } else {
       gender = "Male";
     }
 
-    return new Person(firstName, surName, age, gender);
+    if (age > 67) {
+      profession = "Retired";
+    }
+
+    return new Person(firstName, surName, age, gender, profession);
   }
 }
