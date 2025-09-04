@@ -1,0 +1,12 @@
+{
+  "firstNames": {
+    "1": "John",
+    "2": "Jane",
+    "3": "Alice"
+  },
+  "surNames": {
+    "1": "Doe",
+    "2": "Smith",
+    "3": "Johnson"
+  }
+}
