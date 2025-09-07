@@ -99,7 +99,8 @@
     "97": { "name": "Violet", "gender": "female" },
     "98": { "name": "Kyle", "gender": "male" },
     "99": { "name": "Eleanor", "gender": "female" },
-    "100": { "name": "Madeline", "gender": "female" }
+    "100": { "name": "Madeline", "gender": "female" },
+    "101": { "name": "Jesper", "gender": "male" }
   },
   "surNames": {
     "1": "Smith",
