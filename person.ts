@@ -1,5 +1,5 @@
 import person from "./person.json" with { type: "json" };
-import { getRandomKey } from "./utils.ts";
+import { getRandomKey, professionByAge } from "./utils.ts";
 
 export class Person {
   #firstName: string;
@@ -53,7 +53,9 @@ export class Person {
     return person.ages[getRandomKey(person.ages)];
   }
 
-  private static generateProfession(): string {
+  private static generateProfession(age: number): string {
+    const ageBased = professionByAge(age);
+    if (ageBased) return ageBased;
     return person.professions[getRandomKey(person.professions)];
   }
 
@@ -61,17 +63,7 @@ export class Person {
     const { firstName, gender } = this.generateFirstName();
     const lastName = this.generateSurname();
     const age = this.generateAge();
-    let profession = this.generateProfession();
-
-    if (age > 67) {
-      profession = "Retired";
-    } else if (age < 18 && age > 5) {
-      profession = "Student";
-    } else if (age <= 5) {
-      profession = "Child";
-    } else {
-      profession = person.professions[getRandomKey(person.professions)];
-    }
+    const profession = this.generateProfession(age);
 
     return new Person(firstName, lastName, age, gender, profession);
   }
