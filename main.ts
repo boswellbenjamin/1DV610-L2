@@ -7,3 +7,8 @@ console.log(randomPerson.getSurname());
 console.log(randomPerson.getAge());
 console.log(randomPerson.getGender());
 console.log(randomPerson.getProfession());
+console.log(randomPerson.getCountry());
+console.log(randomPerson.getCity());
+console.log(randomPerson.getPostalCode());
+console.log(randomPerson.getAddress());
+console.log(randomPerson.getEmail());
