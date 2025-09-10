@@ -12,7 +12,7 @@ await build({
   typeCheck: false,
   package: {
     name: "person-data-generator",
-    version: "0.1.1",
+    version: "0.1.2",
     description: "Generate random person data for testing and development",
     license: "MIT",
     repository: {
@@ -27,5 +27,7 @@ await build({
     // Copy the JSON data file
     Deno.copyFileSync("person.json", "npm/esm/person.json");
     Deno.copyFileSync("person.json", "npm/script/person.json");
+    // Copy README.md
+    Deno.copyFileSync("README.md", "npm/README.md");
   },
 });
