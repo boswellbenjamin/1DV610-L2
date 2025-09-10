@@ -336,5 +336,127 @@
     "28": "Translator",
     "29": "Veterinarian",
     "30": "Construction Worker"
+  },
+  "locations": {
+    "1": {
+      "country": "United States",
+      "city": "New York",
+      "postalCode": "10001",
+      "address": "123 Broadway Ave"
+    },
+    "2": {
+      "country": "United States",
+      "city": "Los Angeles",
+      "postalCode": "90001",
+      "address": "456 Sunset Blvd"
+    },
+    "3": {
+      "country": "United States",
+      "city": "Chicago",
+      "postalCode": "60601",
+      "address": "789 Michigan Ave"
+    },
+    "4": {
+      "country": "Canada",
+      "city": "Toronto",
+      "postalCode": "M5H 2N2",
+      "address": "101 Queen St W"
+    },
+    "5": {
+      "country": "Canada",
+      "city": "Vancouver",
+      "postalCode": "V5K 0A1",
+      "address": "202 Granville St"
+    },
+    "6": {
+      "country": "United Kingdom",
+      "city": "London",
+      "postalCode": "SW1A 1AA",
+      "address": "10 Downing St"
+    },
+    "7": {
+      "country": "United Kingdom",
+      "city": "Manchester",
+      "postalCode": "M1 1AE",
+      "address": "55 Deansgate"
+    },
+    "8": {
+      "country": "Germany",
+      "city": "Berlin",
+      "postalCode": "10115",
+      "address": "Alexanderplatz 1"
+    },
+    "9": {
+      "country": "Germany",
+      "city": "Munich",
+      "postalCode": "80331",
+      "address": "Marienplatz 22"
+    },
+    "10": {
+      "country": "France",
+      "city": "Paris",
+      "postalCode": "75001",
+      "address": "15 Rue de Rivoli"
+    },
+    "11": {
+      "country": "France",
+      "city": "Lyon",
+      "postalCode": "69001",
+      "address": "8 Place des Terreaux"
+    },
+    "12": {
+      "country": "Spain",
+      "city": "Madrid",
+      "postalCode": "28001",
+      "address": "Calle de Alcalá 33"
+    },
+    "13": {
+      "country": "Spain",
+      "city": "Barcelona",
+      "postalCode": "08001",
+      "address": "La Rambla 99"
+    },
+    "14": {
+      "country": "Italy",
+      "city": "Rome",
+      "postalCode": "00184",
+      "address": "Via del Corso 77"
+    },
+    "15": {
+      "country": "Italy",
+      "city": "Milan",
+      "postalCode": "20121",
+      "address": "Corso Vittorio Emanuele II 45"
+    },
+    "16": {
+      "country": "Australia",
+      "city": "Sydney",
+      "postalCode": "2000",
+      "address": "120 George St"
+    },
+    "17": {
+      "country": "Australia",
+      "city": "Melbourne",
+      "postalCode": "3000",
+      "address": "200 Collins St"
+    },
+    "18": {
+      "country": "Sweden",
+      "city": "Stockholm",
+      "postalCode": "111 22",
+      "address": "Drottninggatan 12"
+    },
+    "19": {
+      "country": "Norway",
+      "city": "Oslo",
+      "postalCode": "0150",
+      "address": "Karl Johans gate 7"
+    },
+    "20": {
+      "country": "Japan",
+      "city": "Tokyo",
+      "postalCode": "100-0001",
+      "address": "Chiyoda 1-1"
+    }
   }
 }
