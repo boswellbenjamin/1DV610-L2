@@ -1,6 +1,6 @@
 {
   "name": "@benjaminboswell/random-person-generator",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "license": "MIT",
   "exports": "./person.ts",
   "tasks": {
@@ -10,7 +10,7 @@
     "@std/assert": "jsr:@std/assert@1"
   },
   "publish": {
-    "include": ["person.ts", "person.json", "utils.ts"],
+    "include": ["person.ts", "person.json", "utils.ts", "README.md"],
     "exclude": ["main.ts"]
   }
 }
