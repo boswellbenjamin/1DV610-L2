@@ -49,10 +49,14 @@ export class Person {
     return person.surNames[getRandomKey(person.surNames)];
   }
 
+  private static generateAge(): number {
+    return person.ages[getRandomKey(person.ages)];
+  }
+
    static random(): Person {
     const { firstName, gender } = this.generateFirstName();
     const lastName = this.generateSurname();
-    const age = person.ages[getRandomKey(person.ages)];
+    const age = this.generateAge();
     let profession: string;
 
     if (age > 67) {
