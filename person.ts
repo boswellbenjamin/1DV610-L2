@@ -2,51 +2,51 @@ import person from "./person.json" with { type: "json" };
 import { getRandomKey } from "./utils.ts";
 
 export class Person {
-  firstName: string;
-  lastName: string;
-  age: number;
-  gender: string;
-  profession: string;
+  #firstName: string;
+  #lastName: string;
+  #age: number;
+  #gender: string;
+  #profession: string;
 
   constructor(firstName: string, lastName: string, age: number, gender: string, profession: string) {
-    this.firstName = firstName;
-    this.lastName = lastName;
-    this.age = age;
-    this.gender = gender;
-    this.profession = profession;
+    this.#firstName = firstName;
+    this.#lastName = lastName;
+    this.#age = age;
+    this.#gender = gender;
+    this.#profession = profession;
   }
   
   getName(): string {
-    return this.firstName;
+    return this.#firstName;
   }
 
   getSurname(): string {
-    return this.lastName;
+    return this.#lastName;
   }
   
   getAge(): number {
-    return this.age;
+    return this.#age;
   }
 
 
   getGender(): string {
-    return this.gender;
+    return this.#gender;
   }
 
-  getProfession(): string {
-    return this.profession;
+  getProfession(): string {    
+    return this.#profession;
   }
 
    static random(): Person {
     
     let gender: string;
+    let profession: string;
   
     const age = person.ages[getRandomKey(person.ages)];
     const firstNameKey = getRandomKey(person.firstNames);
     const firstNameData = person.firstNames[firstNameKey];
     const firstName = firstNameData.name;
     const surName = person.surNames[getRandomKey(person.surNames)];
-    let profession = person.professions[getRandomKey(person.professions)];
     
     if (firstNameData.gender === "Female") {
       gender = "Female";
@@ -56,10 +56,12 @@ export class Person {
 
     if (age > 67) {
       profession = "Retired";
-    } if (age < 18 && age > 5) {
+    } else if (age < 18 && age > 5) {
       profession = "Student";
-    } if (age < 5) {
-      profession = "Child"
+    } else if (age <= 5) {
+      profession = "Child";
+    } else {
+      profession = person.professions[getRandomKey(person.professions)];
     }
 
     return new Person(firstName, surName, age, gender, profession);
