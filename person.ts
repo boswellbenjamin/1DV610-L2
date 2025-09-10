@@ -37,22 +37,23 @@ export class Person {
     return this.#profession;
   }
 
-   static random(): Person {
-    
-    let gender: string;
-    let profession: string;
-  
-    const age = person.ages[getRandomKey(person.ages)];
+  private static generateFirstName(): { firstName: string, gender: string } {
     const firstNameKey = getRandomKey(person.firstNames);
     const firstNameData = person.firstNames[firstNameKey];
     const firstName = firstNameData.name;
-    const surName = person.surNames[getRandomKey(person.surNames)];
-    
-    if (firstNameData.gender === "Female") {
-      gender = "Female";
-    } else {
-      gender = "Male";
-    }
+    const gender = firstNameData.gender === "Female" ? "Female" : "Male";
+    return { firstName, gender };
+  }
+
+  private static generateSurname(): string {
+    return person.surNames[getRandomKey(person.surNames)];
+  }
+
+   static random(): Person {
+    const { firstName, gender } = this.generateFirstName();
+    const lastName = this.generateSurname();
+    const age = person.ages[getRandomKey(person.ages)];
+    let profession: string;
 
     if (age > 67) {
       profession = "Retired";
@@ -64,6 +65,6 @@ export class Person {
       profession = person.professions[getRandomKey(person.professions)];
     }
 
-    return new Person(firstName, surName, age, gender, profession);
+    return new Person(firstName, lastName, age, gender, profession);
   }
 }
