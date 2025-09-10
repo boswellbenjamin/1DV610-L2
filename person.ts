@@ -56,6 +56,10 @@ export class Person {
 
     if (age > 67) {
       profession = "Retired";
+    } if (age < 18 && age > 5) {
+      profession = "Student";
+    } if (age < 5) {
+      profession = "Child"
     }
 
     return new Person(firstName, surName, age, gender, profession);
