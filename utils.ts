@@ -15,3 +15,14 @@ export function professionByAge(age: number): string {
     return "";
   }
 }
+
+export function generateRandomEmail(
+  firstName: string,
+  lastName: string
+): string {
+  const domains = ["gmail.com", "outlook.com", "yahoo.com", "hotmail.com"];
+  const randomDomain = domains[Math.floor(Math.random() * domains.length)];
+  const emailUser =
+    firstName + "." + lastName + Math.floor(Math.random() * 1000);
+  return emailUser.toLowerCase() + "@" + randomDomain;
+}

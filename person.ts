@@ -1,5 +1,5 @@
 import person from "./person.json" with { type: "json" };
-import { getRandomKey, professionByAge } from "./utils.ts";
+import { getRandomKey, professionByAge, generateRandomEmail } from "./utils.ts";
 
 export class Person {
   #firstName: string;
@@ -99,10 +99,8 @@ export class Person {
   }
 
   private static generateEmail(firstName: string, lastName: string) {
-    const domains = ["gmail.com", "outlook.com", "yahoo.com", "hotmail.com"];
-    const randomDomain = domains[Math.floor(Math.random() * domains.length)];
-    const emailUser = firstName + "." + lastName + Math.floor(Math.random() * 1000);
-    return emailUser.toLowerCase() + "@" + randomDomain;
+    const randomEmail = generateRandomEmail(firstName, lastName);
+    if (randomEmail) return randomEmail;
   }
 
    static random(): Person {
@@ -111,7 +109,7 @@ export class Person {
     const age = this.generateAge();
     const profession = this.generateProfession(age); 
     const { country, city, postalCode, address } = this.generateLocation();
-    const email = this.generateEmail(firstName, lastName);
+    const email = this.generateEmail(firstName, lastName) ?? "";
     return new Person(firstName, lastName, age, gender, profession, country, city, postalCode, address, email);
   }
 }
