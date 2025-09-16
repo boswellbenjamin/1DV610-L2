@@ -4,13 +4,20 @@
   "license": "MIT",
   "exports": "./person.ts",
   "tasks": {
-    "dev": "deno run --watch main.ts"
+    "dev": "deno run --watch main.ts",
+    "ai": "deno run --allow-read --allow-net person-ai-generation.ts"
   },
   "imports": {
     "@std/assert": "jsr:@std/assert@1"
   },
   "publish": {
-    "include": ["person.ts", "person-ai.ts", "person.json", "utils.ts", "README.md"],
+    "include": [
+      "person.ts",
+      "person-ai.ts",
+      "person.json",
+      "utils.ts",
+      "README.md"
+    ],
     "exclude": ["main.ts"]
   }
 }
