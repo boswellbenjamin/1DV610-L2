@@ -24,10 +24,8 @@ await build({
     },
   },
   postBuild() {
-    // Copy the JSON data file
     Deno.copyFileSync("person.json", "npm/esm/person.json");
     Deno.copyFileSync("person.json", "npm/script/person.json");
-    // Copy README.md
     Deno.copyFileSync("README.md", "npm/README.md");
   },
 });
