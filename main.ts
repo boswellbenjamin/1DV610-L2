@@ -2,13 +2,13 @@ import { Person } from "./person.ts";
 
 const randomPerson = Person.random();
 
-console.log(randomPerson.getName());
-console.log(randomPerson.getSurname());
-console.log(randomPerson.getAge());
-console.log(randomPerson.getGender());
-console.log(randomPerson.getProfession());
-console.log(randomPerson.getCountry());
-console.log(randomPerson.getCity());
-console.log(randomPerson.getPostalCode());
-console.log(randomPerson.getAddress());
-console.log(randomPerson.getEmail());
+console.log("Generated Person:");
+console.log(`Name: ${randomPerson.getName()} ${randomPerson.getSurname()}`);
+console.log(`Age: ${randomPerson.getAge()}`);
+console.log(`Gender: ${randomPerson.getGender()}`);
+console.log(`Profession: ${randomPerson.getProfession()}`);
+console.log(`Location: ${randomPerson.getCity()}, ${randomPerson.getCountry()}`);
+console.log(`Email: ${randomPerson.getEmail()}`);
+
+console.log("\nTo generate AI portrait, run:");
+console.log("deno run --allow-read --allow-net example.ts");
