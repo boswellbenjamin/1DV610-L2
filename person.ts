@@ -12,8 +12,9 @@ export class Person {
   #postalCode: string;
   #address: string;
   #email: string;
+  #portraitUrl?: string;
 
-  constructor(firstName: string, lastName: string, age: number, gender: string, profession: string, country: string, city: string, postalCode: string, address: string, email: string) {
+  constructor(firstName: string, lastName: string, age: number, gender: string, profession: string, country: string, city: string, postalCode: string, address: string, email: string, portraitUrl?: string) {
     this.#firstName = firstName;
     this.#lastName = lastName;
     this.#age = age;
@@ -24,6 +25,7 @@ export class Person {
     this.#postalCode = postalCode;
     this.#address = address;
     this.#email = email;
+    this.#portraitUrl = portraitUrl;
   }
   
   getName(): string {
@@ -66,11 +68,19 @@ export class Person {
     return this.#email;
   }
 
+  getPortraitUrl(): string | undefined {
+    return this.#portraitUrl;
+  }
+
+  setPortraitUrl(url: string): void {
+    this.#portraitUrl = url;
+  }
+
   private static generateFirstName(): { firstName: string, gender: string } {
     const firstNameKey = getRandomKey(person.firstNames);
     const firstNameData = person.firstNames[firstNameKey];
     const firstName = firstNameData.name;
-    const gender = firstNameData.gender === "Female" ? "Female" : "Male";
+    const gender = firstNameData.gender === "female" ? "Female" : "Male";
     return { firstName, gender };
   }
 
