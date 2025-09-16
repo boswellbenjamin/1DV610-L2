@@ -10,7 +10,7 @@
     "@std/assert": "jsr:@std/assert@1"
   },
   "publish": {
-    "include": ["person.ts", "person.json", "utils.ts", "README.md"],
+    "include": ["person.ts", "person-ai.ts", "person.json", "utils.ts", "README.md"],
     "exclude": ["main.ts"]
   }
 }
