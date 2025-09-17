@@ -10,7 +10,7 @@ async function main() {
   console.log(`Gender: ${randomPerson.getGender()}`);
   console.log(`Profession: ${randomPerson.getProfession()}`);
   console.log(
-    `Location: ${randomPerson.getCity()}, ${randomPerson.getCountry()}`
+    `Location: ${randomPerson.getCity()}, ${randomPerson.getCountry()}, ${randomPerson.getPostalCode()}, ${randomPerson.getAddress()}`
   );
   console.log(`Email: ${randomPerson.getEmail()}`);
 
