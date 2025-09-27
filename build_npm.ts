@@ -12,7 +12,7 @@ await build({
   typeCheck: false,
   package: {
     name: "person-data-generator",
-    version: "0.1.4",
+    version: "0.1.5",
     description: "Generate random person data for testing and development",
     license: "MIT",
     repository: {
