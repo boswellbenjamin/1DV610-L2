@@ -11,8 +11,9 @@ A lightweight TypeScript/JavaScript library for generating realistic random pers
 - Gender-specific first names
 - Realistic email address generation
 - Location data including country, city, postal code, and address
+- **AI-powered portrait generation** using Replicate API (bring your own API key)
 - TypeScript support with full type definitions
-- Zero dependencies
+- Zero dependencies for core functionality
 - Works in Deno, Node.js, and browsers
 
 ## Installation
@@ -55,6 +56,39 @@ console.log(person.getAddress());     // "123 Main Street"
 console.log(person.getEmail());       // "emma.johnson847@gmail.com"
 ```
 
+### AI Portrait Generation
+
+Generate AI-powered portraits for your random people using Replicate API:
+
+```typescript
+import { Person, PersonAI } from "@benjaminboswell/random-person-generator";
+
+// First, set up your .env file with your Replicate API token
+// REPLICATE_API_TOKEN=r8_your_token_here
+
+// Generate a person and their AI portrait
+const person = Person.random();
+const portraitUrl = await PersonAI.generate(person);
+
+console.log(`${person.getName()} ${person.getSurname()}'s portrait: ${portraitUrl}`);
+```
+
+#### AI Generation Options
+
+```typescript
+const portraitUrl = await PersonAI.generate(person, {
+  model: "black-forest-labs/flux-schnell", // AI model to use
+  width: 512,   // Image width
+  height: 512,  // Image height
+  steps: 4      // Generation steps (quality vs speed)
+});
+```
+
+**Requirements for AI features:**
+1. Create a `.env` file in your project root
+2. Add your Replicate API token: `REPLICATE_API_TOKEN=your_token_here`
+3. Get a free token at [replicate.com](https://replicate.com)
+
 ### Generate Multiple People
 
 ```typescript
@@ -94,6 +128,14 @@ The generator automatically assigns age-appropriate professions:
 - `getPostalCode()`: Returns the postal code (string)
 - `getAddress()`: Returns the street address (string)
 - `getEmail()`: Returns the generated email address (string)
+
+### PersonAI Class
+
+#### Static Methods
+
+- `PersonAI.generate(person, options?)`: Generates an AI portrait URL for the given person
+  - Requires `REPLICATE_API_TOKEN` in `.env` file
+  - Returns a Promise that resolves to the image URL (string)
 
 ## Use Cases
 
