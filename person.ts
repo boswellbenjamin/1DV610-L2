@@ -2,78 +2,78 @@ import person from "./person.json" with { type: "json" };
 import { getRandomKey, professionByAge, generateRandomEmail } from "./utils.ts";
 
 export class Person {
-  #firstName: string;
-  #lastName: string;
-  #age: number;
-  #gender: string;
-  #profession: string;
-  #country: string;
-  #city: string;
-  #postalCode: string;
-  #address: string;
-  #email: string;
-  #portraitUrl?: string;
+  firstName: string;
+  lastName: string;
+  age: number;
+  gender: string;
+  profession: string;
+  country: string;
+  city: string;
+  postalCode: string;
+  address: string;
+  email: string;
+  portraitUrl?: string;
 
   constructor(firstName: string, lastName: string, age: number, gender: string, profession: string, country: string, city: string, postalCode: string, address: string, email: string, portraitUrl?: string) {
-    this.#firstName = firstName;
-    this.#lastName = lastName;
-    this.#age = age;
-    this.#gender = gender;
-    this.#profession = profession;
-    this.#country = country;  
-    this.#city = city;
-    this.#postalCode = postalCode;
-    this.#address = address;
-    this.#email = email;
-    this.#portraitUrl = portraitUrl;
+    this.firstName = firstName;
+    this.lastName = lastName;
+    this.age = age;
+    this.gender = gender;
+    this.profession = profession;
+    this.country = country;  
+    this.city = city;
+    this.postalCode = postalCode;
+    this.address = address;
+    this.email = email;
+    this.portraitUrl = portraitUrl;
   }
   
   getName(): string {
-    return this.#firstName;
+    return this.firstName;
   }
 
   getSurname(): string {
-    return this.#lastName;
+    return this.lastName;
   }
   
   getAge(): number {
-    return this.#age;
+    return this.age;
   }
 
   getGender(): string {
-    return this.#gender;
+    return this.gender;
   }
 
   getProfession(): string {    
-    return this.#profession;
+    return this.profession;
   }
 
   getCountry(): string {
-    return this.#country;
+    return this.country;
   }
 
   getCity(): string {
-    return this.#city;
+    return this.city;
   }
   
   getPostalCode(): string {
-    return this.#postalCode;
+    return this.postalCode;
   }
 
   getAddress(): string {
-    return this.#address;
+    return this.address;
   }
 
   getEmail(): string {
-    return this.#email;
+    return this.email;
   }
 
   getPortraitUrl(): string | undefined {
-    return this.#portraitUrl;
+    return this.portraitUrl;
   }
 
   setPortraitUrl(url: string): void {
-    this.#portraitUrl = url;
+    this.portraitUrl = url;
   }
 
   private static generateFirstName(): { firstName: string, gender: string } {
