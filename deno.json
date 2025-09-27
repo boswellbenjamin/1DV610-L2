@@ -1,6 +1,6 @@
 {
   "name": "@benjaminboswell/random-person-generator",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "license": "MIT",
   "exports": "./person.ts",
   "tasks": {
