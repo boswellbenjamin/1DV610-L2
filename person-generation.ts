@@ -11,6 +11,3 @@ console.log(
   `Location: ${randomPerson.getCity()}, ${randomPerson.getCountry()}, ${randomPerson.getPostalCode()}, ${randomPerson.getAddress()}`
 );
 console.log(`Email: ${randomPerson.getEmail()}`);
-
-console.log("\nTo generate AI portrait, run:");
-console.log("deno run --allow-read --allow-net example.ts");
