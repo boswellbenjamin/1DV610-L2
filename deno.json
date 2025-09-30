@@ -4,7 +4,7 @@
   "license": "MIT",
   "exports": "./person.ts",
   "tasks": {
-    "dev": "deno run --watch main.ts",
+    "dev": "deno run --watch person-generation.ts",
     "ai": "deno run --allow-read --allow-net person-ai-generation.ts"
   },
   "imports": {
