@@ -1,5 +1,5 @@
 import type { Person } from "./person.ts";
-import { load } from "https://deno.land/std@0.208.0/dotenv/mod.ts";
+import { load } from "jsr:@std/dotenv@0.225.3";
 
 export interface AIGenerationOptions {
   width?: number;

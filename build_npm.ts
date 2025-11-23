@@ -3,7 +3,14 @@ import { build, emptyDir } from "https://deno.land/x/dnt/mod.ts";
 await emptyDir("./npm");
 
 await build({
-  entryPoints: ["./person.ts", "./person-ai.ts", "./utils.ts"],
+  entryPoints: [
+    "./person.ts",
+    "./person-generator.ts",
+    "./person-ai.ts",
+    "./email-generator.ts",
+    "./profession-resolver.ts",
+    "./random-selector.ts",
+  ],
   outDir: "./npm",
   shims: {
     deno: true,
@@ -12,7 +19,7 @@ await build({
   typeCheck: false,
   package: {
     name: "person-data-generator",
-    version: "0.1.5",
+    version: "0.1.6",
     description: "Generate random person data for testing and development",
     license: "MIT",
     repository: {
