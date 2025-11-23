@@ -1,33 +1,42 @@
-import person from "./person.json" with { type: "json" };
-import { getRandomKey, professionByAge, generateRandomEmail } from "./utils.ts";
-
 export class Person {
-  firstName: string;
-  lastName: string;
-  age: number;
-  gender: string;
-  profession: string;
-  country: string;
-  city: string;
-  postalCode: string;
-  address: string;
-  email: string;
-  portraitUrl?: string;
+  private firstName: string;
+  private lastName: string;
+  private age: number;
+  private gender: string;
+  private profession: string;
+  private country: string;
+  private city: string;
+  private postalCode: string;
+  private address: string;
+  private email: string;
+  private portraitUrl?: string;
 
-  constructor(firstName: string, lastName: string, age: number, gender: string, profession: string, country: string, city: string, postalCode: string, address: string, email: string, portraitUrl?: string) {
+  constructor(
+    firstName: string,
+    lastName: string,
+    age: number,
+    gender: string,
+    profession: string,
+    country: string,
+    city: string,
+    postalCode: string,
+    address: string,
+    email: string,
+    portraitUrl?: string
+  ) {
     this.firstName = firstName;
     this.lastName = lastName;
     this.age = age;
     this.gender = gender;
     this.profession = profession;
-    this.country = country;  
+    this.country = country;
     this.city = city;
     this.postalCode = postalCode;
     this.address = address;
     this.email = email;
     this.portraitUrl = portraitUrl;
   }
-  
+
   getName(): string {
     return this.firstName;
   }
@@ -35,7 +44,7 @@ export class Person {
   getSurname(): string {
     return this.lastName;
   }
-  
+
   getAge(): number {
     return this.age;
   }
@@ -44,7 +53,7 @@ export class Person {
     return this.gender;
   }
 
-  getProfession(): string {    
+  getProfession(): string {
     return this.profession;
   }
 
@@ -55,7 +64,7 @@ export class Person {
   getCity(): string {
     return this.city;
   }
-  
+
   getPostalCode(): string {
     return this.postalCode;
   }
@@ -74,52 +83,5 @@ export class Person {
 
   setPortraitUrl(url: string): void {
     this.portraitUrl = url;
-  }
-
-  private static generateFirstName(): { firstName: string, gender: string } {
-    const firstNameKey = getRandomKey(person.firstNames);
-    const firstNameData = person.firstNames[firstNameKey];
-    const firstName = firstNameData.name;
-    const gender = firstNameData.gender === "female" ? "Female" : "Male";
-    return { firstName, gender };
-  }
-
-  private static generateLocation(): { country: string, city: string, postalCode: string, address: string } {
-    const locationKey = getRandomKey(person.locations);
-    const locationData = person.locations[locationKey];
-    const country = locationData.country;
-    const city = locationData.city;
-    const postalCode = locationData.postalCode;
-    const address = locationData.address;
-    return { country, city, postalCode, address };
-  }
-
-  private static generateSurname(): string {
-    return person.surNames[getRandomKey(person.surNames)];
-  }
-
-  private static generateAge(): number {
-    return person.ages[getRandomKey(person.ages)];
-  }
-
-  private static generateProfession(age: number): string {
-    const ageBased = professionByAge(age);
-    if (ageBased) return ageBased;
-    return person.professions[getRandomKey(person.professions)];
-  }
-
-  private static generateEmail(firstName: string, lastName: string) {
-    const randomEmail = generateRandomEmail(firstName, lastName);
-    if (randomEmail) return randomEmail;
-  }
-
-   static random(): Person {
-    const { firstName, gender } = this.generateFirstName();
-    const lastName = this.generateSurname();
-    const age = this.generateAge();
-    const profession = this.generateProfession(age); 
-    const { country, city, postalCode, address } = this.generateLocation();
-    const email = this.generateEmail(firstName, lastName) ?? "";
-    return new Person(firstName, lastName, age, gender, profession, country, city, postalCode, address, email);
   }
 }
