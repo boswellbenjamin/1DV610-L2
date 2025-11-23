@@ -1,8 +1,9 @@
-import { Person } from "./person.ts";
-import { PersonAI } from "./person-ai.ts";
+import { PersonGenerator } from "./person-generator.ts";
+import { PortraitGeneratorFactory } from "./person-ai.ts";
 
 async function main() {
-  const randomPerson = Person.random();
+  const personGenerator = new PersonGenerator();
+  const randomPerson = personGenerator.generate();
 
   console.log("Generated Person:");
   console.log(`Name: ${randomPerson.getName()} ${randomPerson.getSurname()}`);
@@ -17,7 +18,9 @@ async function main() {
   try {
     console.log("\nGenerating AI portrait...");
 
-    const imageUrl = await PersonAI.generatePortraitFromEnv(randomPerson);
+    const portraitFactory = new PortraitGeneratorFactory();
+    const portraitGenerator = await portraitFactory.createFromEnv();
+    const imageUrl = await portraitGenerator.generatePortrait(randomPerson);
 
     console.log("Portrait generated successfully!");
     console.log(`Image URL: ${imageUrl}`);
@@ -34,6 +37,4 @@ async function main() {
   }
 }
 
-if (import.meta.main) {
-  main();
-}
+main();
