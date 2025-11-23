@@ -19,7 +19,7 @@ async function main() {
     console.log("\nGenerating AI portrait...");
 
     const portraitFactory = new PortraitGeneratorFactory();
-    const portraitGenerator = await portraitFactory.createFromEnv();
+    const portraitGenerator = portraitFactory.createFromEnv();
     const imageUrl = await portraitGenerator.generatePortrait(randomPerson);
 
     console.log("Portrait generated successfully!");

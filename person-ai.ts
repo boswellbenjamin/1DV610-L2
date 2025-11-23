@@ -1,5 +1,4 @@
 import type { Person } from "./person.ts";
-import { load } from "jsr:@std/dotenv@0.225.3";
 
 export interface AIGenerationOptions {
   width?: number;
@@ -104,11 +103,10 @@ export class PortraitGenerator {
 }
 
 export class PortraitGeneratorFactory {
-  async createFromEnv(options?: Partial<AIGenerationOptions>): Promise<PortraitGenerator> {
-    const env = await load();
-    const token = env["REPLICATE_API_TOKEN"];
+  createFromEnv(options?: Partial<AIGenerationOptions>): PortraitGenerator {
+    const token = Deno.env.get("REPLICATE_API_TOKEN");
     if (!token) {
-      throw new Error("REPLICATE_API_TOKEN not found in .env file");
+      throw new Error("REPLICATE_API_TOKEN environment variable not set");
     }
     return new PortraitGenerator(token, options);
   }
