@@ -1,6 +1,7 @@
-import { Person } from "./person.ts";
+import { PersonGenerator } from "./person-generator.ts";
 
-const randomPerson = Person.random();
+const generator = new PersonGenerator();
+const randomPerson = generator.generate();
 
 console.log("Generated Person:");
 console.log(`Name: ${randomPerson.getName()} ${randomPerson.getSurname()}`);
