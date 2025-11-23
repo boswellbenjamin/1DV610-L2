@@ -9,39 +9,34 @@ export interface AIGenerationOptions {
   model?: string;
 }
 
-export class PersonAI {
-  private static readonly DEFAULT_MODEL =
-    "2c8e954decbf70b7607a4414e5785ef9e4de4b8c51d50fb8b8b349160e0ef6bb";
-  private static readonly DEFAULT_OPTIONS: Required<AIGenerationOptions> = {
-    width: 512,
-    height: 512,
-    steps: 20,
-    guidanceScale: 7.5,
-    model: PersonAI.DEFAULT_MODEL,
-  };
+export class PortraitGenerator {
+  private apiToken: string;
+  private defaultModel: string;
+  private defaultOptions: Required<AIGenerationOptions>;
 
-  private static async loadApiToken(): Promise<string> {
-    const env = await load();
-    const token = env["REPLICATE_API_TOKEN"];
-    if (!token) {
-      throw new Error("REPLICATE_API_TOKEN not found in .env file");
-    }
-    return token;
+  constructor(apiToken: string, options?: Partial<AIGenerationOptions>) {
+    this.apiToken = apiToken;
+    this.defaultModel = "2c8e954decbf70b7607a4414e5785ef9e4de4b8c51d50fb8b8b349160e0ef6bb";
+    this.defaultOptions = {
+      width: options?.width ?? 512,
+      height: options?.height ?? 512,
+      steps: options?.steps ?? 20,
+      guidanceScale: options?.guidanceScale ?? 7.5,
+      model: options?.model ?? this.defaultModel,
+    };
   }
 
-  static async generatePortrait(
+  async generatePortrait(
     person: Person,
-    apiToken: string,
-    options: AIGenerationOptions = {}
+    options?: AIGenerationOptions
   ): Promise<string> {
-    const config = { ...PersonAI.DEFAULT_OPTIONS, ...options };
-
-    const prompt = PersonAI.buildPrompt(person);
+    const config = { ...this.defaultOptions, ...options };
+    const prompt = this.buildPrompt(person);
 
     const response = await fetch("https://api.replicate.com/v1/predictions", {
       method: "POST",
       headers: {
-        Authorization: `Token ${apiToken}`,
+        Authorization: `Token ${this.apiToken}`,
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
@@ -63,13 +58,21 @@ export class PersonAI {
     }
 
     const prediction = await response.json();
+    const imageUrl = await this.pollForResult(prediction);
 
+    person.setPortraitUrl(imageUrl);
+    return imageUrl;
+  }
+
+  private async pollForResult(prediction: { status: string; urls: { get: string }; output?: string | string[]; error?: string }): Promise<string> {
     let result = prediction;
+
     while (result.status === "starting" || result.status === "processing") {
       await new Promise((resolve) => setTimeout(resolve, 1000));
+
       const pollResponse = await fetch(result.urls.get, {
         headers: {
-          Authorization: `Token ${apiToken}`,
+          Authorization: `Token ${this.apiToken}`,
         },
       });
 
@@ -83,11 +86,7 @@ export class PersonAI {
     }
 
     if (result.status === "succeeded" && result.output) {
-      const imageUrl = Array.isArray(result.output)
-        ? result.output[0]
-        : result.output;
-      person.setPortraitUrl(imageUrl);
-      return imageUrl;
+      return Array.isArray(result.output) ? result.output[0] : result.output;
     }
 
     throw new Error(
@@ -95,19 +94,22 @@ export class PersonAI {
     );
   }
 
-  static async generatePortraitFromEnv(
-    person: Person,
-    options: AIGenerationOptions = {}
-  ): Promise<string> {
-    const apiToken = await PersonAI.loadApiToken();
-    return PersonAI.generatePortrait(person, apiToken, options);
-  }
-
-  private static buildPrompt(person: Person): string {
+  private buildPrompt(person: Person): string {
     return `Professional portrait of a ${person.getAge()}-year-old ${person
       .getGender()
       .toLowerCase()} ${person
       .getProfession()
       .toLowerCase()} from ${person.getCountry()}, high quality photography, professional headshot, clean background, photorealistic`;
+  }
+}
+
+export class PortraitGeneratorFactory {
+  async createFromEnv(options?: Partial<AIGenerationOptions>): Promise<PortraitGenerator> {
+    const env = await load();
+    const token = env["REPLICATE_API_TOKEN"];
+    if (!token) {
+      throw new Error("REPLICATE_API_TOKEN not found in .env file");
+    }
+    return new PortraitGenerator(token, options);
   }
 }
