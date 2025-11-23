@@ -1,11 +1,16 @@
 {
   "name": "@benjaminboswell/random-person-generator",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "license": "MIT",
-  "exports": "./person.ts",
+  "exports": {
+    ".": "./person.ts",
+    "./generator": "./person-generator.ts",
+    "./ai": "./person-ai.ts"
+  },
   "tasks": {
     "dev": "deno run --watch person-generation.ts",
-    "ai": "deno run --allow-read --allow-net person-ai-generation.ts"
+    "ai": "deno run --allow-read --allow-net person-ai-generation.ts",
+    "test": "deno test"
   },
   "imports": {
     "@std/assert": "jsr:@std/assert@1"
@@ -13,11 +18,14 @@
   "publish": {
     "include": [
       "person.ts",
+      "person-generator.ts",
       "person-ai.ts",
+      "email-generator.ts",
+      "profession-resolver.ts",
+      "random-selector.ts",
       "person.json",
-      "utils.ts",
       "README.md"
     ],
-    "exclude": ["main.ts"]
+    "exclude": ["utils.ts"]
   }
 }
