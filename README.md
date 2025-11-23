@@ -15,12 +15,14 @@ A lightweight TypeScript/JavaScript library for generating realistic random pers
 - TypeScript support with full type definitions
 - Zero dependencies for core functionality
 - Works in Deno, Node.js, and browsers
+- Full OOP design with dependency injection support
 
 ## Installation
 
 ### Deno (JSR)
 ```typescript
 import { Person } from "@benjaminboswell/random-person-generator";
+import { PersonGenerator } from "@benjaminboswell/random-person-generator/generator";
 ```
 
 ### Node.js (npm)
@@ -29,9 +31,9 @@ npm install person-data-generator
 ```
 
 ```javascript
-import { Person } from "person-data-generator";
+import { Person, PersonGenerator } from "person-data-generator";
 // or
-const { Person } = require("person-data-generator");
+const { Person, PersonGenerator } = require("person-data-generator");
 ```
 
 ## Usage
@@ -39,10 +41,13 @@ const { Person } = require("person-data-generator");
 ### Basic Usage
 
 ```typescript
-import { Person } from "@benjaminboswell/random-person-generator";
+import { PersonGenerator } from "@benjaminboswell/random-person-generator/generator";
+
+// Create a generator instance
+const generator = new PersonGenerator();
 
 // Generate a random person
-const person = Person.random();
+const person = generator.generate();
 
 console.log(person.getName());        // "Emma"
 console.log(person.getSurname());     // "Johnson"
@@ -61,22 +66,26 @@ console.log(person.getEmail());       // "emma.johnson847@gmail.com"
 Generate AI-powered portraits for your random people using Replicate API:
 
 ```typescript
-import { Person, PersonAI } from "@benjaminboswell/random-person-generator";
+import { PersonGenerator } from "@benjaminboswell/random-person-generator/generator";
+import { PortraitGenerator, PortraitGeneratorFactory } from "@benjaminboswell/random-person-generator/ai";
 
-// First, set up your .env file with your Replicate API token
-// REPLICATE_API_TOKEN=r8_your_token_here
+// Generate a person
+const personGenerator = new PersonGenerator();
+const person = personGenerator.generate();
 
-// Generate a person and their AI portrait
-const person = Person.random();
-const portraitUrl = await PersonAI.generate(person);
+// Create portrait generator from environment variable
+const factory = new PortraitGeneratorFactory();
+const portraitGenerator = factory.createFromEnv();
 
+// Generate portrait
+const portraitUrl = await portraitGenerator.generatePortrait(person);
 console.log(`${person.getName()} ${person.getSurname()}'s portrait: ${portraitUrl}`);
 ```
 
 #### AI Generation Options
 
 ```typescript
-const portraitUrl = await PersonAI.generate(person, {
+const portraitGenerator = new PortraitGenerator("your_api_token", {
   model: "black-forest-labs/flux-schnell", // AI model to use
   width: 512,   // Image width
   height: 512,  // Image height
@@ -85,26 +94,45 @@ const portraitUrl = await PersonAI.generate(person, {
 ```
 
 **Requirements for AI features:**
-1. Create a `.env` file in your project root
-2. Add your Replicate API token: `REPLICATE_API_TOKEN=your_token_here`
-3. Get a free token at [replicate.com](https://replicate.com)
+1. Set the environment variable: `REPLICATE_API_TOKEN=your_token_here`
+2. Get a free token at [replicate.com](https://replicate.com)
 
 ### Generate Multiple People
 
 ```typescript
+const generator = new PersonGenerator();
+
 // Generate an array of random people
-const people = Array.from({ length: 10 }, () => Person.random());
+const people = Array.from({ length: 10 }, () => generator.generate());
 
 people.forEach(person => {
   console.log(`${person.getName()} ${person.getSurname()}, ${person.getAge()}`);
 });
 ```
 
+### Custom Configuration with Dependency Injection
+
+```typescript
+import { PersonGenerator } from "@benjaminboswell/random-person-generator/generator";
+import { EmailGenerator } from "person-data-generator";
+import { ProfessionResolver } from "person-data-generator";
+
+// Create custom email generator with specific domains
+const emailGenerator = new EmailGenerator(["company.com", "work.org"]);
+
+// Create custom profession resolver with different age thresholds
+const professionResolver = new ProfessionResolver(65, 16, 4);
+
+// Inject custom dependencies
+const generator = new PersonGenerator(emailGenerator, professionResolver);
+const person = generator.generate();
+```
+
 ### Age-Appropriate Professions
 
 The generator automatically assigns age-appropriate professions:
 - Ages 0-5: "Baby"
-- Ages 6-17: "Student"  
+- Ages 6-17: "Student"
 - Ages 68+: "Retired"
 - Ages 18-67: Random profession from dataset
 
@@ -112,9 +140,13 @@ The generator automatically assigns age-appropriate professions:
 
 ### Person Class
 
-#### Static Methods
+A data class representing a person with all their attributes.
 
-- `Person.random()`: Generates a new random Person instance
+#### Constructor
+
+```typescript
+new Person(firstName, lastName, age, gender, profession, country, city, postalCode, address, email, portraitUrl?)
+```
 
 #### Instance Methods
 
@@ -128,14 +160,81 @@ The generator automatically assigns age-appropriate professions:
 - `getPostalCode()`: Returns the postal code (string)
 - `getAddress()`: Returns the street address (string)
 - `getEmail()`: Returns the generated email address (string)
+- `getPortraitUrl()`: Returns the portrait URL if set (string | undefined)
+- `setPortraitUrl(url)`: Sets the portrait URL
 
-### PersonAI Class
+### PersonGenerator Class
 
-#### Static Methods
+Generates random Person instances.
 
-- `PersonAI.generate(person, options?)`: Generates an AI portrait URL for the given person
-  - Requires `REPLICATE_API_TOKEN` in `.env` file
-  - Returns a Promise that resolves to the image URL (string)
+#### Constructor
+
+```typescript
+new PersonGenerator(emailGenerator?, professionResolver?, randomSelector?, data?)
+```
+
+All parameters are optional and allow dependency injection for testing.
+
+#### Instance Methods
+
+- `generate()`: Creates and returns a new random Person
+
+### EmailGenerator Class
+
+Generates random email addresses.
+
+#### Constructor
+
+```typescript
+new EmailGenerator(domains?)
+```
+
+- `domains`: Optional array of email domains (default: gmail.com, outlook.com, yahoo.com, hotmail.com)
+
+#### Instance Methods
+
+- `generate(firstName, lastName)`: Returns a generated email address
+
+### ProfessionResolver Class
+
+Determines profession based on age.
+
+#### Constructor
+
+```typescript
+new ProfessionResolver(retirementAge?, adultAge?, babyAge?)
+```
+
+- `retirementAge`: Age when someone is "Retired" (default: 67)
+- `adultAge`: Age when someone stops being a "Student" (default: 18)
+- `babyAge`: Age when someone stops being a "Baby" (default: 5)
+
+#### Instance Methods
+
+- `resolve(age)`: Returns profession string based on age
+- `isAgeBasedProfession(age)`: Returns true if age determines profession
+
+### PortraitGenerator Class
+
+Generates AI portraits using Replicate API.
+
+#### Constructor
+
+```typescript
+new PortraitGenerator(apiToken, options?)
+```
+
+#### Instance Methods
+
+- `generatePortrait(person, options?)`: Returns Promise<string> with image URL
+
+### PortraitGeneratorFactory Class
+
+Factory for creating PortraitGenerator instances.
+
+#### Instance Methods
+
+- `createFromEnv(options?)`: Creates PortraitGenerator using REPLICATE_API_TOKEN environment variable
 
 ## Use Cases
 
